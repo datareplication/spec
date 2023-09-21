@@ -1,0 +1,29 @@
+# Feed
+- doubly-linked list of pages
+  - must not contain loops
+  - links must be consistent
+    - page1: next=page2
+    - page2: prev=page1
+- entry point: URL to a feed page
+  - SHOULD be latest page
+  - others are possible
+- required header for every page:
+  - Last-Modified
+  - Link rel=self ???
+  - if previous page: Link rel=prev
+  - if next page: Link rel=next
+- required header for every entity:
+  - Last-Modified
+  - Operation-Type (PUT, DELETE, PATCH)
+  - Content-ID
+    - strictly required?
+- MUST support GET and HEAD requests
+- Last-Modified MUST be monotonically increasing across all pages
+- Last-Modified of a page MUST be the Last-Modified of its last entity
+  - softer: >= Last-Modified of its last entity, <= Last-Modified of the first entity on the next page, >= Last-Modified of the previous page
+- Content-IDs MUST be unique within a feed
+- pages MUST be immutable
+  - exceptions:
+    - removing prev link from an old page to incrementally GC old things
+    - latest page (= no next link): append more entities
+    - latest page: add next link to newer pages
