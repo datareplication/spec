@@ -1,0 +1,40 @@
+{
+    "$id": "https://datareplication.io/doc/jsonschema/snapshot/index.schema.json",
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "type": "object",
+    "required": [
+        "id",
+        "createdAt",
+        "pages"
+    ],
+    "properties": {        
+        "id": {
+            "type": "string",
+            "description": "Unique identifier of the snapshot.",
+            "examples": [
+                "12345678",
+                "1695841775",
+                "341f9312-f27c-22d5-e712-223454980097"
+            ]
+        },
+        "createdAt": {
+            "type": "string",
+            "description": "Creation time of the snapshot. We suggest to use the ISO 8601 format here.",
+            "examples": [
+                "2023-11-27T20:52:17.000Z"
+            ]
+        },
+        "pages": {
+            "type": "array",
+            "description": "List of pages as URLs.",
+            "examples": [
+                "/snapshot/12345678/page/0",
+                "/snapshot/12345678/page/1",
+                "/snapshot/12345678/page/2"
+            ],
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}
