@@ -27,3 +27,18 @@
     - removing prev link from an old page to incrementally GC old things
     - latest page (= no next link): append more entities
     - latest page: add next link to newer pages
+
+> I've written down some less-obvious requirements for feed page linking. This is probably not exhaustive, but should cover the tricky points:
+> * A feed is a doubly-linked list of pages.
+> * Page links must be consistent, i.e. the prev and next links of adjacent pages must match.
+> * The feed must not form a loop.
+> * Pages must have a self link.
+> * A page without a prev link / next link marks the oldest / latest end of the stream respectively. These may be the same page.
+> * Timestamps of entities must be monotonically increasing.
+> * The timestamp of a page must be the timestamp of the last entity on the page.
+> * Every page that can be navigated to by following the links backwards or forwards must be considered published.
+> * Published pages must not be modified, with the following exceptions:
+>   - Appending entities to a page without a next link.
+>   - Adding a next link to a page that didn't have one before.
+>   - Removing a prev link from a page (which makes older pages unreachable and e.g. eligible for garbage collection).
+> * The latest URL should point to a page without a next link, but it's not strictly speaking incorrect for the page at the latest URL to have a next link. However, pages reachable by following that next link are reachable by consumers and must be considered published.
