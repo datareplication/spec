@@ -1,6 +1,8 @@
 {
     "$id": "https://datareplication.io/doc/jsonschema/snapshot/index.schema.json",
-    "$schema": "https://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Snapshot index",
+    "description": "The index page of a snapshot with all the corresponding links to the pages of the snapshot.",
     "type": "object",
     "required": [
         "id",
