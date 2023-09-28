@@ -1,5 +1,5 @@
 {
-    "$id": "https://datareplication.io/doc/jsonschema/snapshot/index.schema.json",
+    "$id": "https://www.datareplication.io/spec/snapshot/index.schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Snapshot index",
     "description": "The index page of a snapshot with all the corresponding links to the pages of the snapshot.",
@@ -21,7 +21,8 @@
         },
         "createdAt": {
             "type": "string",
-            "description": "Creation time of the snapshot. We suggest to use the ISO 8601 format here.",
+            "format": "date-time",
+            "description": "Creation time of the snapshot in ISO 8601 format.",
             "examples": [
                 "2023-11-27T20:52:17.000Z"
             ]
