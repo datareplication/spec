@@ -4,6 +4,7 @@
     "title": "Snapshot index",
     "description": "The index page of a snapshot with all the corresponding links to the pages of the snapshot.",
     "type": "object",
+    "additionalProperties": true,
     "required": [
         "id",
         "createdAt",
@@ -29,11 +30,11 @@
         },
         "pages": {
             "type": "array",
-            "description": "List of pages as URLs.",
+            "description": "List of absolute page URLs.",
             "examples": [
-                "/snapshot/12345678/page/0",
-                "/snapshot/12345678/page/1",
-                "/snapshot/12345678/page/2"
+                "https://example.datareplication.io/snapshot/12345678/page/0",
+                "https://example.datareplication.io/snapshot/12345678/page/1",
+                "https://example.datareplication.io/snapshot/12345678/page/2"
             ],
             "items": {
                 "type": "string"

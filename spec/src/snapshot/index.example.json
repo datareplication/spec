@@ -2,8 +2,8 @@
     "id": "12345678",
     "createdAt": "2023-09-27T20:52:17.000Z",
     "pages": [
-      "/12345678/page/1",
-      "/12345678/page/2",
-      "/12345678/page/3"
+      "https://example.datareplication.io/12345678/page/1",
+      "https://example.datareplication.io/12345678/page/2",
+      "https://example.datareplication.io/12345678/page/3"
     ]
   }

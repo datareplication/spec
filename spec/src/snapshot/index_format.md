@@ -1,18 +1,12 @@
 # Snapshot Index Format
-
-- Content-Type? `application/json`?
-- check encoding?
-- JSON
-  - id
-  - started timestamp
-  - list of pages (URLs)
+The snapshot index is a JSON document. It is served over HTTP with the content type `application/json`. Page urls must be absolute.
 
 ## JSON Schema
 
 ```json
 {{#include index.schema.json}}
 ```
-- additional fields allowed (?)
+It is allowed to include additional properties.
 
 ## Example of the snapshot index format
 ```json
