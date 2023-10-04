@@ -1,4 +1,24 @@
 # Feed
+A feed consists of a doubly-linked list of pages.
+Each page usually has three `Link` HTTP page headers:
+- self: url of the current page itself
+- prev: url of the previous page
+- next: url of the next page
+The first page of the feed does not have a prev link. Also, the last page does not have a next link. 
+You can find further information in the RFC 8288 (https://httpwg.org/specs/rfc8288.html#header).
+
+Each page contains one of more entities. [Page Format](./page_format.md)
+
+Each entity must have a Last-Modified header. They must be formatted using the timestamp format for HTTP `Last-Modified` Headers.
+The must be monotonically increasing across all pages.
+
+A page must have a Last-Modified header. It must be monotonically increasing from first to last page.
+They must adhere to the following rules:
+- Monotonically increasing across all pages
+- 
+Entry point to the feed is an url to a feed page. 
+Typically, this is the latest page.
+
 - doubly-linked list of pages
   - must not contain loops
   - links must be consistent
