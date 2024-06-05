@@ -1,4 +1,4 @@
-name: Deploy Site
+name: Deploy
 
 on:
   push:
@@ -24,19 +24,11 @@ jobs:
         uses: peaceiris/actions-mdbook@v1
         with:
           mdbook-version: latest
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v3
       - run: mdbook build spec
-      - name: Build site
-        run: |
-          mkdir -p target
-          cp *.html target/
-          cp -r spec/book target/spec
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./target
+          path: ./book
 
   deploy:
     environment:
