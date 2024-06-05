@@ -24,7 +24,7 @@ jobs:
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: latest
-      - run: mdbook build spec
+      - run: mdbook build .
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
