@@ -3,3 +3,10 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Datareplication Format Documentation"
+
+[output.html]
+additional-css = ["css/custom.css"]
+curly-quotes = true
+
+[build]
+extra-watch-dirs = ["css"]
