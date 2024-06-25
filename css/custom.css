@@ -63,6 +63,11 @@ h1, h2, h3 {
     font-weight: 400;
 }
 
+blockquote {
+    background-color: #EEEBE2;
+    border-block: none;
+}
+
 h1 {
     margin-top: 20px;
     font-size: 5rem;
