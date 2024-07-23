@@ -1,5 +1,6 @@
 # Snapshot Index Format
-The snapshot index is a JSON document. It is served over HTTP with the content type `application/json`. Page urls must be absolute.
+The snapshot index, structured as a JSON document, is delivered over HTTP with the content type `application/json`. 
+All linked pages within the index must contain absolute URLs.
 
 ## JSON Schema
 
