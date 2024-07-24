@@ -96,3 +96,11 @@ h4 {
 li {
     color: #000;
 }
+
+#theme-toggle {
+    display: none;
+}
+
+#searchbar{
+    background-color: #EEEBE2;
+}
