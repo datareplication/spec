@@ -1,64 +1,47 @@
 # Feed
-A feed consists of a doubly-linked list of pages.
-Each page usually has three `Link` HTTP page headers:
-- self: url of the current page itself
-- prev: url of the previous page
-- next: url of the next page
-The first page of the feed does not have a prev link. Also, the last page does not have a next link. 
-You can find further information in the RFC 8288 (https://httpwg.org/specs/rfc8288.html#header).
+A feed is a sequence of entities that chronicle modifications to a resource, organized into multiple pages. 
+Each page contains at least one or more entities.
 
-Each page contains one of more entities. [Page Format](./page_format.md)
+Typically, a page in a feed includes three `Link` HTTP headers:
+- `self`: the URL of the current page
+- `prev`: the URL of the preceding page
+- `next`: the URL of the subsequent page
+> **_NOTE:_** The initial page lacks a `prev` link, and the final page omits a `next` link. 
+Additional details on this can be found in [RFC 8288](https://httpwg.org/specs/rfc8288.html#header).
 
+Refer to [Page Format](./page_format.md) for the structure of each page, which accommodates one or more entities.
+
+## Required headers
+There are some required headers for every page.
+For a feed page, the `Link; rel=next` and `Link; rel=prev` header is optional.
+
+| Name           | Required | Example                                                      |
+|----------------|----------|--------------------------------------------------------------|
+| Content-Type   | yes      | <sup>Content-Type: multipart/mixed; boundary="rdm-bny"</sup> |
+| Last-Modified  | yes      | <sup>Last-Modified: Mon, 27 Nov 2023 03:10:00 GMT</sup>      |
+| Link; rel=self | yes      | <sup>Link: https://example.com/feed/hash;rel=self</sup>      |
+| Link; rel=next | no       | <sup>Link: https://example.com/feed/hash;rel=next</sup>      |
+| Link; rel=prev | no       | <sup>Link: https://example.com/feed/hash;rel=prev</sup>      |
+
+## Finding an entry point
+Each feed consumer needs to find a valid starting point.
+This can be determined reading the feed from the beginning or by using a snapshot as a starting point. 
+The snapshot's creation date serves as the entry point. 
+
+## Pagination
+To ensure efficient navigation and access for feed consumers, it's essential for providers to incorporate pagination mechanisms.
+This process involves crawling to the feed through both `HEAD` requests and `GET` requests for retrieving specific pages. 
+Think about a doubly-linked list of pages, where each page has a `prev` and `next` link.
+
+> **_NOTE:_** Links must be consistent, i.e. the prev and next links of adjacent pages must match and the feed must not form a loop.
+
+### Last-Modified
 Each entity must have a Last-Modified header. They must be formatted using the timestamp format for HTTP `Last-Modified` Headers.
-The must be monotonically increasing across all pages.
 
-A page must have a Last-Modified header. It must be monotonically increasing from first to last page.
-They must adhere to the following rules:
-- Monotonically increasing across all pages
-- 
-Entry point to the feed is an url to a feed page. 
-Typically, this is the latest page.
+> **_NOTE:_** The must be monotonically increasing across all pages.
 
-- doubly-linked list of pages
-  - must not contain loops
-  - links must be consistent
-    - page1: next=page2
-    - page2: prev=page1
-- entry point: URL to a feed page
-  - SHOULD be latest page
-  - others are possible
-- required header for every page:
-  - Last-Modified
-  - Link rel=self ???
-  - if previous page: Link rel=prev
-  - if next page: Link rel=next
-- required header for every entity:
-  - Last-Modified
-  - Operation-Type (PUT, DELETE, PATCH)
-  - Content-ID
-    - strictly required?
-- MUST support GET and HEAD requests
-- Last-Modified MUST be monotonically increasing across all pages
-- Last-Modified of a page MUST be the Last-Modified of its last entity
-  - softer: >= Last-Modified of its last entity, <= Last-Modified of the first entity on the next page, >= Last-Modified of the previous page
-- Content-IDs MUST be unique within a feed
-- pages MUST be immutable
-  - exceptions:
-    - removing prev link from an old page to incrementally GC old things
-    - latest page (= no next link): append more entities
-    - latest page: add next link to newer pages
-
-> I've written down some less-obvious requirements for feed page linking. This is probably not exhaustive, but should cover the tricky points:
-> * A feed is a doubly-linked list of pages.
-> * Page links must be consistent, i.e. the prev and next links of adjacent pages must match.
-> * The feed must not form a loop.
-> * Pages must have a self link.
-> * A page without a prev link / next link marks the oldest / latest end of the stream respectively. These may be the same page.
-> * Timestamps of entities must be monotonically increasing.
-> * The timestamp of a page must be the timestamp of the last entity on the page.
-> * Every page that can be navigated to by following the links backwards or forwards must be considered published.
-> * Published pages must not be modified, with the following exceptions:
->   - Appending entities to a page without a next link.
->   - Adding a next link to a page that didn't have one before.
->   - Removing a prev link from a page (which makes older pages unreachable and e.g. eligible for garbage collection).
-> * The latest URL should point to a page without a next link, but it's not strictly speaking incorrect for the page at the latest URL to have a next link. However, pages reachable by following that next link are reachable by consumers and must be considered published.
+## Immutability of pages
+Treat published pages as immutable once created, with a few specific exceptions:
+- New entities can be added to the most recent page if it doesn't have a `next` link.
+- A `next` link can be introduced to the most recent page, after which it becomes immutable.
+- A `prev` link may be removed from an older page as part of a gradual cleanup process.

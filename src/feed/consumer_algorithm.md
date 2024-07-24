@@ -12,3 +12,8 @@
   - timestamps not old enough
 
 - musings on different entry points?
+
+## Resume consumption
+After fully consuming the feed, it's important for the consumer to note the `Last-Modified` date of the last entity.
+This date then becomes the new entry point for future consumption.
+Additionally, to avoid processing the same entity multiple times, consumers are advised to record the `Content-ID` of the last entity they processed.
