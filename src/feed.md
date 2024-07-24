@@ -23,26 +23,22 @@ For a feed page, the `Link; rel=next` and `Link; rel=prev` header is optional.
 | Link; rel=next | no       | <sup>Link: https://example.com/feed/hash;rel=next</sup>      |
 | Link; rel=prev | no       | <sup>Link: https://example.com/feed/hash;rel=prev</sup>      |
 
-
-### Last-Modified
-Each entity must have a Last-Modified header. They must be formatted using the timestamp format for HTTP `Last-Modified` Headers.
-> **_NOTE:_** The must be monotonically increasing across all pages.
-
-> **_NOTE:_** Links must be consistent, i.e. the prev and next links of adjacent pages must match and the feed must not form a loop.
-
 ## Finding an entry point
 Each feed consumer needs to find a valid starting point.
 This can be determined reading the feed from the beginning or by using a snapshot as a starting point. 
 The snapshot's creation date serves as the entry point. 
 
-## Resume consumption
-After fully consuming the feed, it's important for the consumer to note the `Last-Modified` date of the last entity. 
-This date then becomes the new entry point for future consumption. 
-Additionally, to avoid processing the same entity multiple times, consumers are advised to record the `Content-ID` of the last entity they processed.
-
 ## Pagination
-To ensure efficient navigation and access for feed consumers, it's essential for providers to incorporate pagination mechanisms. 
-This process involves crawling to the feed through both `HEAD` requests and `GET` requests for retrieving specific pages.
+To ensure efficient navigation and access for feed consumers, it's essential for providers to incorporate pagination mechanisms.
+This process involves crawling to the feed through both `HEAD` requests and `GET` requests for retrieving specific pages. 
+Think about a doubly-linked list of pages, where each page has a `prev` and `next` link.
+
+> **_NOTE:_** Links must be consistent, i.e. the prev and next links of adjacent pages must match and the feed must not form a loop.
+
+### Last-Modified
+Each entity must have a Last-Modified header. They must be formatted using the timestamp format for HTTP `Last-Modified` Headers.
+
+> **_NOTE:_** The must be monotonically increasing across all pages.
 
 ## Immutability of pages
 Treat published pages as immutable once created, with a few specific exceptions:
