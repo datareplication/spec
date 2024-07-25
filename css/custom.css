@@ -6,7 +6,7 @@
     color: black;
 }
 
-a:visited {
+a:visited, .content a:link {
     color: #FF5A55;
 }
 
@@ -82,14 +82,14 @@ h2 {
 }
 
 h3 {
-    font-size: 4rem;
-    font-weight: 600;
+    font-size: 3.5rem;
+    font-weight: 500;
     line-height: 1.2;
 }
 
 h4 {
-    font-size: 4rem;
-    font-weight: 600;
+    font-size: 3.5rem;
+    font-weight: 400;
     line-height: 1.2;
 }
 
@@ -101,6 +101,31 @@ li {
     display: none;
 }
 
-#searchbar{
+#searchbar {
     background-color: #EEEBE2;
+}
+
+.table-wrapper {
+    color: #000;
+}
+
+table thead th {
+    background-color: #EEEBE2;
+}
+
+table td {
+    background-color: #ffffff;
+}
+
+.hljs{
+    color: #000;
+    background-color: #EEEBE2;
+}
+
+:not(pre):not(a) > .hljs {
+    color: #000;
+}
+
+.hljs-string, .hljs-literal{
+    color: #FF5A55;
 }
